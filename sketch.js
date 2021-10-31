@@ -1,5 +1,6 @@
 var noiseVal = 0.125;
 var defaultStroke = 2;
+var showPaperSizeOutlines = true;
 
 function setup() {
   createCanvas(816, 1056, SVG).position((windowWidth-width)/2, (windowHeight-height)/2);
@@ -10,12 +11,6 @@ function setup() {
   stroke(0);
   strokeWeight(defaultStroke);
   strokeJoin(ROUND);
-
-  //guide-lines
-  stroke(220);
-  rect(0,0,width,height);
-  // line(width/2, 0, width/2, height); //mid-face horiz
-  // line(0, height/2, width, height/2); //mid-face vert
 
   stroke(0);
   push();
@@ -41,14 +36,13 @@ function drawFace(sc) {
   strokeWeight(defaultStroke / sc);
 
   stroke(225);
-  //rect(-w*8.5/22,h*2/11,w*8.5/11,h);
+  if(showPaperSizeOutlines){
+    rect(-w*8.5/22,h*2/11,w*8.5/11,h);
+  }
   stroke(0);
 
-  //fill(0);
-  //circle(0, h, w/16); //mouth
   circle(-w/11, h - h*2.5/11, w/16); //left eye
   circle(w/11, h - h*2.5/11, w/16); //right eye
-  //noFill();
 
   arc(0,0,w*12/11, w*12/11, PI/4, 3*PI/4); //forehead
 
@@ -63,7 +57,9 @@ function drawFace(sc) {
 
 function drawRightSide(w, h) {
   stroke(225);
-  //rect(0,-h*8.5/22 + h*2/11,w,h*8.5/11);
+  if(showPaperSizeOutlines){
+    rect(0,-h*8.5/22 + h*2/11,w,h*8.5/11);
+  }
   stroke(0);
 
   push();
@@ -77,7 +73,9 @@ function drawRightSide(w, h) {
 
 function drawLeftSide(w, h) {
   stroke(225);
-  //rect(0,-h*8.5/22 + h*2/11,-w,h*8.5/11);
+  if(showPaperSizeOutlines){
+    rect(0,-h*8.5/22 + h*2/11,-w,h*8.5/11);
+  }
   stroke(0);
 
   push();
@@ -94,8 +92,10 @@ function drawBack(w, h) {
   var hairLength = w*14/11;
 
   stroke(225);
-  // rect(0, -h + h*2/11, w*8.5/11, h);
-  // rect(0, -h + h*2/11, -w*8.5/11, h);
+  if(showPaperSizeOutlines){
+    rect(0, -h + h*2/11, w*8.5/11, h);
+    rect(0, -h + h*2/11, -w*8.5/11, h);
+  }
   stroke(0);
 
   line(-w*7/11, 0, -hairLength/2, 0);
@@ -160,7 +160,9 @@ function drawHeart(sc) {
   strokeWeight(defaultStroke / sc);
 
   stroke(225);
-  //rect(-width/2, height*16/11, width, height);
+  if(showPaperSizeOutlines){
+    rect(-width/2, height*16/11, width, height);
+  }
   stroke(0);
 
   for (var sign = -1; sign <= 1; sign += 2) {
@@ -182,8 +184,6 @@ function drawHeart(sc) {
 function drawCheeks(distFromMiddle, y, maxRad) {
 
   var rad = random(maxRad/2, maxRad);
-  var a = randomGaussian(rad/8, rad/64);
-  var r;
 
   switch(ceil(random(3))){
     case 1: //x's
@@ -222,7 +222,6 @@ function drawMouth(w, h) {
   var smiliness = abs(randomGaussian(1/4, 0.125));
   var wiggle = 1 + abs(randomGaussian(0, smiliness/24));
   var numWiggles = pow(2,(ceil(random(3))));
-  print(smiliness);
 
   beginShape();
   vertex(-w*2/11, h - h/11);
@@ -297,19 +296,4 @@ function drawEyelashes(xEye1, xEye2, h, r) {
     line(0,r,0,r+10);
   }
   pop();
-}
-
-function hersheyText(msg, sc, x, y, alignment) {
-  strokeWeight(defaultStroke/sc);
-
-  push();
-  translate(x, y);
-  scale(sc);
-  P5.animatedHershey.putText(millis(), false, msg, {
-    cmap: FONT_HERSHEY.SCRIPT_SIMPLEX,
-    align: alignment
-  });
-  pop();
-
-  strokeWeight(defaultStroke);
 }
