@@ -1,6 +1,6 @@
 var noiseVal = 0.125;
 var defaultStroke = 2;
-var showPaperSizeOutlines = true;
+var showPaperSizeOutlines = false;
 
 function setup() {
   createCanvas(816, 1056, SVG).position((windowWidth-width)/2, (windowHeight-height)/2);
